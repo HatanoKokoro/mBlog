@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.web.admin.dao.interfaces.IadminAboutDao">
+	
+	<resultMap type="SysAbout" id="baseResult">
+		<id property="id" column="id"/>
+		<result property="content" column="content"/>
+		<result property="title" column="title"/>
+		<result property="status" column="status"/>
+		<result property="userId" column="user_id"/>
+		<result property="createTime" column="createtime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
+		<result property="modifyTime" column="modifytime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<parameterMap type="SysAbout" id="baseParam">
+		<parameter property="id"/>	
+		<parameter property="content"/>	
+		<parameter property="title"/>	
+		<parameter property="status"/>	
+		<parameter property="userId"/>	
+		<parameter property="createTime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>	
+		<parameter property="modifyTime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>	
+	</parameterMap>
+	
+	<sql id="columns">
+		id,content,title,status,user_id as userId,createtime as createTime, modifytime as modifyTime
+	</sql> 
+	
+	<insert id="AddAbout" parameterType="com.blog.web.entity.SysAbout">
+	insert into sys_about (content,title,status,user_id,createtime,modifytime)
+			values (#{content},#{title},#{status},#{userId},#{createTime,jdbcType=TIMESTAMP},#{modifyTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="findByUserId" resultMap="baseResult" parameterType="map">
+		select <include refid="columns"></include> from sys_about where user_id = #{userId} limit #{},8
+	</select>
+	
+	<select id="findById" resultType="map" parameterType="map">
+		select <include refid="columns"></include> from sys_about where id = #{id} 
+	</select>
+	
+	<update id="ModifyAbout" parameterType="map">
+		update sys_about set title=#{title},content=#{content},modifytime=#{modifytime,jdbcType=TIMESTAMP} where id = #{id}
+	</update>
+	
+	<delete id="del" parameterType="int">
+		delete from sys_about where id =#{id}
+	</delete>
+	
+</mapper>

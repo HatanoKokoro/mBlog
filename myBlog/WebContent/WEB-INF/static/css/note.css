@@ -1,0 +1,26 @@
+.nla{
+	font-size: large;
+	font:400 20px/1.62 "Microsoft JhengHei", sans-serif;
+	color:#804000;
+	text-align: center;
+    margin-left: 50px;
+}
+.sp{
+	float: right;
+	font:400 8px/1.62 "Microsoft JhengHei", sans-serif;
+	color:#000000;
+    margin-right: 20px;
+	
+}
+.page{
+	bottom:0;
+    margin-bottom: 100px;
+    text-align: center;
+	
+}
+
+.sdes{
+	margin-left: 90px;
+	font:400 16px/1.62 "Microsoft JhengHei", sans-serif;
+}
+

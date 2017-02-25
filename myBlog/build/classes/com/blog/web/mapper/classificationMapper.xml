@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.web.show.dao.interfaces.IclassificationDao">
+	
+	<resultMap type="classification" id="baseResult">
+		<id property="id" column="id"/>
+		<result property="classificationName" column="classification_name"/>
+		<result property="userId" column="user_id"/>
+	</resultMap>
+
+	<parameterMap type="classification" id="baseParam">
+		<parameter property="id"/>
+		<parameter property="classificationName"/>
+		<parameter property="userId"/>
+	</parameterMap>
+	
+	<sql id="columns">
+		id,classification_name as classificationName,user_id as userId
+	</sql>
+	
+	<select id="findByUserId"  resultType="java.util.Map">
+<!-- 		select <include refid="columns"></include> from classification where user_id = #{userId} -->
+	SELECT c.id,c.classification_name as classificationName,c.user_id as userId ,(SELECT COUNT(n.classification_id) FROM note AS n WHERE n.classification_id =c.id ) AS num FROM classification c WHERE c.user_id = #{userId}
+
+	</select>
+	
+	<insert id="Add" parameterMap="baseParam" >
+		insert into classification (classification_name,user_id) values (#{classificationName},#{userId})
+	</insert>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.web.show.dao.interfaces.IessaysDao">
+	
+	<resultMap type="Essays" id="baseResult">
+		<id property="essaysId" column="essays_id"/>
+		<result property="essaysValue" column="essays_value"/>
+		<result property="userId" column="user_id"/>
+		<result property="createTime" column="createtime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
+		<result property="modifyTime" column="modifytime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<parameterMap type="Essays" id="baseParam">
+		<parameter property="essaysId"/>	
+		<parameter property="essaysValue"/>	
+		<parameter property="userId"/>	
+		<parameter property="createTime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>	
+		<parameter property="modifyTime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>	
+	</parameterMap>
+	
+	<sql id="columns">
+		essays_id as essaysId ,essays_value as essaysValue,user_id as userId,createtime as createTime, modifytime as modifyTime
+	</sql> 
+	
+	<select id="findByUserId" resultMap="baseResult" parameterType="map">
+		select <include refid="columns"></include> from essays where user_id = #{userId}  order by createtime desc
+	</select>
+</mapper>

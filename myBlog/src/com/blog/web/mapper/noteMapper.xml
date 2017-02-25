@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.web.show.dao.interfaces.InoteDao">
+	
+	<resultMap type="note" id="baseResult">
+		<id property="id" column="id"/>
+		<result property="noteName" column="note_name"/>
+		<result property="noteValue" column="note_value"/>
+		<result property="classificationId" column="classification_id"/>
+		<result property="categoryId" column="category_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="traffic" column="traffic"/>
+		<result property="description" column="description"/>
+		<result property="createTime" column="create_time" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
+		<result property="modifyTime" column="modify_time" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<parameterMap type="note" id="baseParam">
+		<parameter property="id"/>
+		<parameter property="noteName"/>
+		<parameter property="noteValue"/>
+		<parameter property="classificationId"/>
+		<parameter property="categoryId"/>
+		<parameter property="userId"/>
+		<parameter property="traffic"/>
+		<parameter property="description"/>
+		<parameter property="createTime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
+		<parameter property="modifyTime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
+	</parameterMap>
+	
+	<sql id="columns">
+		id,note_name as noteName,note_value as noteValue,classification_id as classificationId,category_id as categoryId,user_id as userId,traffic,description,create_time as createTime,modify_time as modifyTime
+	</sql>
+	
+	<sql id="columnAll">
+		db.id,db.note_name as noteName,db.note_value as noteValue,db.classification_id as classificationId,db.category_id as categoryId,db.user_id as userId,db.traffic,db.description,db.create_time as createTime,db.modify_time as modifyTime
+	</sql>
+	 
+	<select id="findByUserId" resultMap="baseResult" parameterType="map">
+		select <include refid="columns"></include> from note where user_id = #{userId} order by create_time desc limit 0,3
+	</select>
+	
+	<select id="findById" resultMap="baseResult">
+		select <include refid="columns"></include> from note where id = #{id}  order by create_time desc
+	</select>
+	
+	<select id="findPage" resultType="java.util.Map">
+		select <include refid="columnAll"></include> ,(SELECT COUNT(c.comments_id) FROM comments AS c WHERE c.note_id=db.id) AS num  FROM note AS db  where db.user_id = #{userId} 
+		<if test="categoryId != null and categoryId !='' ">
+			and db.category_id = #{categoryId}
+		</if>
+		<if test="classificationId != null and classificationId !='' ">
+			and db.classification_id = #{classificationId}
+		</if>
+		<if test="searchKey != null and searchKey !='' ">
+			and db.note_name like  "%"#{searchKey}"%"
+		</if>
+		 order by db.create_time desc limit #{pageSize},8
+	</select>
+<!-- 	<select id="findPage" resultType="java.util.Map"> -->
+<!-- 		select <include refid="columns"></include> from note where user_id = #{userId}  -->
+<!-- 		<if test="categoryId != null and categoryId !='' "> -->
+<!-- 			and category_id = #{categoryId} -->
+<!-- 		</if> -->
+<!-- 		<if test="classificationId != null and classificationId !='' "> -->
+<!-- 			and classification_id = #{classificationId} -->
+<!-- 		</if> -->
+<!-- 	</select> -->
+	
+	<update id="modifyTraffic" parameterType="int">
+		update traffic set ((select traffic from note where id = #{id})+1) from note where id =#{id}
+	</update>
+	
+</mapper>

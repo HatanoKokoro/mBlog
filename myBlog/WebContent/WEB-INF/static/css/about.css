@@ -1,0 +1,34 @@
+.knowledge{
+	height:25%;
+	border:1px solid #c0c0c0;
+	margin-bottom: 30px;
+}
+
+.mod_resource{
+	height:40%;
+	border:1px solid #c0c0c0;
+    margin-bottom: 10px;
+	
+}
+
+.main_detail{
+	height:30%;
+	border:1px solid #c0c0c0;
+    margin-bottom: 10px;
+	
+}
+.main_detail>span{
+	      margin:0px;
+      padding:0px;
+      font-family:"微软雅黑","黑体","宋体";
+      font-size:15px;
+      height:36px;
+            
+}
+
+.abperson_body{
+	width:70%;
+	height:850px;
+	float:left;
+}
+
