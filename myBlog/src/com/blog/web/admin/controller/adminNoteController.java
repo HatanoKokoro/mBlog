@@ -12,11 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.blog.web.admin.service.interfaces.IadminNoteService;
+import com.blog.web.common.TableData;
 import com.blog.web.common.util.baseUtil;
 import com.blog.web.entity.Note;
 import com.blog.web.entity.User;
@@ -119,5 +119,25 @@ public class adminNoteController extends baseUtil{
 		}
 		
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/list" ,method=RequestMethod.GET,produces = "application/json; charset=utf-8")
+	public String PageList(HttpServletRequest request,HttpServletResponse response){
+		ModelAndView mv = new ModelAndView();
+		TableData table = new TableData();
+		try {
+			int pageSize = Integer.parseInt(request.getParameter("pageSize"));
+			int pageIndex = Integer.parseInt(request.getParameter("pageIndex"));
+			User user = (User)request.getSession().getAttribute("UserInfo");
+			List<Map<String,Object>> data = adminNoteService.pageList(user.getUserId(),pageIndex,pageSize);
+			long totalCount = adminNoteService.pageTotalCount(user.getUserId());
+			
+			table.setTotalCount(totalCount);
+			table.addRows(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return table.toString();
 	}
 }

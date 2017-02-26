@@ -16,4 +16,8 @@ public interface IadminNoteDao {
 	public List<Map<String,Object>> findPage(@Param("userId")int userId,@Param("classificationId")int classificationId ,@Param("categoryId")int categoryId,@Param("searchKey")String searchKey,@Param("pageSize")int pageSize) throws Exception;
 	
 	public int del(int id) throws Exception;
+	
+	public List<Map<String,Object>> pageList(int UserId,int pageSize,int pageIndex) throws Exception;
+	
+	public long pageTotalCount(int UserId) throws Exception;
 }

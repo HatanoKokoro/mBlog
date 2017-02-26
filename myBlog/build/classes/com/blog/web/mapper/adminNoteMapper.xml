@@ -64,4 +64,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="del" parameterType="int">
 		delete from note where id = #{id}
 	</delete>
+	
+	<select id="pageList"  resultType="map">
+		select <include refid="columns"></include> from note where user_id = #{0} limit #{1},#{2}
+	</select>
+	
+	<select id="pageTotalCount" parameterType="int" resultType="long">
+		select count(*) from note where user_id = #{userId}
+	</select>
 </mapper>

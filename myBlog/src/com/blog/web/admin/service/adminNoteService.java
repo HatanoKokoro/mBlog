@@ -32,6 +32,16 @@ public class adminNoteService implements IadminNoteService{
 	public int del(int id) throws Exception{
 		return adminNoteDao.del(id);
 	}
+
+	@Override
+	public List<Map<String, Object>> pageList(int UserId,int pageIndex,int pageSize) throws Exception{
+		return adminNoteDao.pageList(UserId,pageIndex,pageSize);
+	}
+
+	@Override
+	public long pageTotalCount(int UserId) throws Exception{
+		return adminNoteDao.pageTotalCount(UserId);
+	}
 	
 	
 	

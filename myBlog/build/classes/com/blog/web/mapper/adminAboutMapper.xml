@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="findByUserId" resultMap="baseResult" parameterType="map">
-		select <include refid="columns"></include> from sys_about where user_id = #{userId} limit #{},8
+		select <include refid="columns"></include> from sys_about where user_id = #{userId} 
 	</select>
 	
 	<select id="findById" resultType="map" parameterType="map">

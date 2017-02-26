@@ -48,55 +48,56 @@
 		</div>
 	</div>
 <script type="text/javascript" src="static/js/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="static/plugin/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="static/plugin/bootstrap-table/bootstrap-table.min.js"></script>
  <script type="text/javascript">
- $('#table').bootstrapTable({
-		pagination: true,
-		pageNumber: 1,
-		pageSize: 10,
-		sidePagination: 'server',
-		queryParamsType: 'limit',
-		queryParams: 
-			function(params){ 
-			var temp = {
-				pageSize: params.limit,
-				pageIndex: params.offset,
-				name_key:$('#searchContent').val() 
-			};
-			return temp;
-		},
-		dataType: "json",
-		clickToSelect: true,
-	    url: "",
-	     columns: [
-	               {
-					field: 'Number',
-					title: '序号',
-					class: 'text-center',
-					formatter: function (value, row, index) {
-								if (row.id!=''){
-									return index+1;
-								}else{
-									return "";
-								}
-						}
-					},
-				     {
-				        field: 'title',
-				        title: '标题'
-				     }, 
-				     {
-				        title: '操作',
-				        class: 'text-center',
-				        formatter: function(value, row, index) {
-				        	if(row.id!=''){
-				        		return  '<a href=""  title="编辑"><i class="glyphicon glyphicon-edit"></i></a>' + '&nbsp;&nbsp;&nbsp;' + 
-								'<a href="javaScript:void();"   title="删除"><i class="glyphicon glyphicon-remove"></i></a>'+'&nbsp;&nbsp;&nbsp;';
-				        	}
-				        }
-				    }
-	    		   ]
-	});
+ $(function(){
+	  $('#table').bootstrapTable('destroy');  
+	 $('#table').bootstrapTable({
+		 	method: "get",
+		    url: "admin/note/list",
+			pagination: true,
+			pageNumber: 1,
+			pageSize: 10,
+			sidePagination: 'server',
+			queryParamsType: 'limit',
+			queryParams: 
+				function(params){ 
+				var temp = {
+					pageSize: params.limit,
+					pageIndex: params.offset,
+					total: this.totalRows,
+//	 				name_key:$('#searchContent').val() 
+				};
+				return temp;
+			},
+			dataType: "json",
+			clickToSelect: true,
+		    onLoadSuccess: function(data) {
+			},
+		    columns: [
+						{
+							field: 'id',
+							title: '序号',
+							class: 'text-center'
+						},
+					     {
+					        field: 'noteName',
+					        title: '标题'
+					     }, 
+					     {
+					        title: '操作',
+					        class: 'text-center',
+					        formatter: function(value, row, index) {
+					        	if(row.id!=''){
+					        		return  '<a href=""  title="编辑"><i class="glyphicon glyphicon-edit"></i></a>' + '&nbsp;&nbsp;&nbsp;' + 
+									'<a href="javaScript:void();"   title="删除"><i class="glyphicon glyphicon-remove"></i></a>'+'&nbsp;&nbsp;&nbsp;';
+					        	}
+					        }
+					    }
+		    		   ]
+		});
+ })
+
 </script>
 </body>
 </html>
