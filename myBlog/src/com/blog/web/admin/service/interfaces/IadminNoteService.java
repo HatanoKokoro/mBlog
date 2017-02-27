@@ -7,8 +7,6 @@ import com.blog.web.entity.Note;
 
 public interface IadminNoteService {
 	
-	public List<Map<String,Object>> AllNote() throws Exception;
-	
 	public int AddNote(Note note) throws Exception;
 	
 	public List<Map<String,Object>> findPage(int userId,int classificationId ,int categoryId,String searchKey,int pageSize) throws Exception;
@@ -18,4 +16,8 @@ public interface IadminNoteService {
 	public List<Map<String,Object>> pageList(int UserId,int pageIndex,int pageSize) throws Exception;
 	
 	public long pageTotalCount(int UserId) throws Exception;
+	
+	public Map<String,Object> findById(int id) throws Exception;
+	
+	public int modify(Map<String,Object> map) throws Exception;
 }

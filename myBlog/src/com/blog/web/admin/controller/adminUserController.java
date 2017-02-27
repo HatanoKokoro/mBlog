@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.blog.web.admin.service.interfaces.IuserService;
+import com.blog.web.common.ArSecurity;
 import com.blog.web.entity.User;
 
 @Controller
 @RequestMapping("/admin")
-public class adminUserController {
+public class adminUserController extends ArSecurity{
 	
 	
 	@Autowired
@@ -41,8 +42,8 @@ public class adminUserController {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			Map map = new HashMap();
-			map.put("username", username);
-			map.put("password", password);
+			map.put("username", encrypt(username));
+			map.put("password", encrypt(password));
 			User user = (User)userService.Login(map);
 			if(user!=null&&user.getUserId()>0){
 				request.getSession().setAttribute("UserInfo", user);

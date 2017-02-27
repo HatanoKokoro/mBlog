@@ -72,4 +72,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="pageTotalCount" parameterType="int" resultType="long">
 		select count(*) from note where user_id = #{userId}
 	</select>
+	
+	<select id="findById"  resultType="map" parameterType="int">
+		select <include refid="columns"></include> from note where id = #{id}
+	</select>
+
+	<update id="modify" parameterType="map">
+		update note set  note_name=#{noteName},note_value=#{noteValue},classification_id=#{classificationId},
+			category_id=#{categoryId},description=#{description},modify_time=#{modify_time} where id=#{id}
+	</update>
 </mapper>

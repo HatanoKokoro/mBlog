@@ -37,7 +37,7 @@
 	  $('#table').bootstrapTable('destroy');  
 	 $('#table').bootstrapTable({
 		 	method: "get",
-		    url: "admin/note/list",
+		    url: "admin/essays/list",
 			pagination: true,
 			pageNumber: 1,
 			pageSize: 10,
@@ -63,7 +63,7 @@
 							title: '序号',
 							class: 'text-center',
 							formatter: function (value, row, index) {
-								if (row.id!=''){
+								if (row.essaysId!=''){
 									return index+1;
 								}else{
 									return "";
@@ -71,16 +71,16 @@
 							}
 						},
 					     {
-					        field: 'noteName',
-					        title: '标题'
+					        field: 'essaysValue',
+					        title: '内容'
 					     }, 
 					     {
 					        title: '操作',
 					        class: 'text-center',
 					        formatter: function(value, row, index) {
-					        	if(row.id!=''){
-					        		return  '<a href="admin/note/modify/'+row.id+'"  title="编辑"><i class="glyphicon glyphicon-edit"></i></a>' + '&nbsp;&nbsp;&nbsp;' + 
-					        		'<a href="javascript:onDel(\''+row.id+'\');" title="删除"><i class="glyphicon glyphicon-remove"></i></a>'
+					        	if(row.essaysId!=''){
+					        		return  '<a href="admin/essays/modify/'+row.essaysId+'"  title="编辑"><i class="glyphicon glyphicon-edit"></i></a>' + '&nbsp;&nbsp;&nbsp;' + 
+					        		'<a href="javascript:onDel(\''+row.essaysId+'\');" title="删除"><i class="glyphicon glyphicon-remove"></i></a>'
 					        	}
 					        }
 					    }
@@ -91,7 +91,7 @@
 function onDel(id){
 	 var i = window.confirm("确定要删除吗?");
 	 if(i==true){
-		 window.location="admin/note/del/"+id;
+		 window.location="admin/essays/del/"+id;
 		 }else{ return false;
 		 }
  }

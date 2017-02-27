@@ -1,6 +1,7 @@
 package com.blog.web.admin.controller;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,8 @@ import com.blog.web.common.TableData;
 import com.blog.web.common.util.baseUtil;
 import com.blog.web.entity.Note;
 import com.blog.web.entity.User;
+
+import net.sf.json.JSONObject;
 
 
 @Controller
@@ -45,34 +48,29 @@ public class adminNoteController extends baseUtil{
 	
 	@ResponseBody
 	@RequestMapping(value={"/add"},method=RequestMethod.POST)
-	public ModelAndView Add(HttpServletRequest request ,HttpServletResponse response){
-		ModelAndView mv = new ModelAndView();
+	public String Add(HttpServletRequest request ,HttpServletResponse response){
+		JSONObject msg = new JSONObject();
 		try {
 			Note note = new Note();
+			String description = request.getParameter("description");
+			if(description==null || "".equals(description)){
+				description =  request.getParameter("description_default");
+			}
 			User user = (User)request.getSession().getAttribute("UserInfo");
 			note.setNoteName(request.getParameter("noteName"));
 			note.setCreateTime(new Timestamp(System.currentTimeMillis()));
 			note.setModifyTime(new Timestamp(System.currentTimeMillis()));
-			String description = request.getParameter("description");
 			note.setDescription(description.substring(0, 10)+"...");
 			note.setNoteValue(request.getParameter("content"));
 			note.setCategoryId(Integer.parseInt(request.getParameter("category")));
 			note.setClassificationId(Integer.parseInt(request.getParameter("classification")));
 			note.setUserId(user.getUserId());
-			int a;
-		
-			a = adminNoteService.AddNote(note);
-		
-			if(a>0)
-				mv.setViewName("admin/note/adminNote_list");
-			else{
-				mv.addObject("","");
-				mv.setViewName("");
-			}
+			int a = adminNoteService.AddNote(note);
+			msg.put("msg", "success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return mv;
+		return msg.toString();
 	}
 	
 	@RequestMapping(value="/{classificationId:[\\d]+}-{userId:[\\d]+}-{categoryId:[\\d]+}-{pageSize:[\\d]+}",method=RequestMethod.GET)
@@ -100,11 +98,44 @@ public class adminNoteController extends baseUtil{
 	}
 
 	
-	@RequestMapping(value="/modify",method=RequestMethod.GET)
-	public ModelAndView modify(HttpServletRequest request,HttpServletResponse response){
+	@RequestMapping(value="/modify/{id:[\\d]+}",method=RequestMethod.GET)
+	public ModelAndView modify(HttpServletRequest request,HttpServletResponse response,
+			@PathVariable int id){
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("admin/note/adminNote_edit");
+		try {
+			Map<String,Object> data = adminNoteService.findById(id);
+			mv.setViewName("admin/note/adminNote_edit");
+			mv.addObject("data",data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value={"/modify"},method=RequestMethod.POST)
+	public String toModify(HttpServletRequest request ,HttpServletResponse response){
+		JSONObject json = new JSONObject();
+		int a=0;
+		try {
+			Map<String,Object> map = new HashMap<String,Object>();
+			String description = request.getParameter("description");
+			if(description==null || "".equals(description)){
+				description =  request.getParameter("description_default").substring(0, 10)+"...";
+			}
+			map.put("noteName", request.getParameter("noteName"));
+			map.put("modifyTime", new Timestamp(System.currentTimeMillis()));
+			map.put("description", description);
+			map.put("noteValue", request.getParameter("content"));
+			map.put("categoryId", request.getParameter("category"));
+			map.put("classificationId", request.getParameter("classification"));
+			map.put("id", request.getParameter("id"));
+			a = adminNoteService.modify(map);
+			json.put("msg", "success");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return json.toString();
 	}
 	
 	@RequestMapping(value="/del/{id:[\\d]+}" ,method=RequestMethod.GET)
@@ -113,7 +144,7 @@ public class adminNoteController extends baseUtil{
 		ModelAndView mv = new ModelAndView();
 		try{
 			int a= adminNoteService.del(id);
-			mv.setViewName("redirect:/admin/note/0-1-0-1");
+			mv.setViewName("redirect:/admin/note");
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -124,7 +155,6 @@ public class adminNoteController extends baseUtil{
 	@ResponseBody
 	@RequestMapping(value="/list" ,method=RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public String PageList(HttpServletRequest request,HttpServletResponse response){
-		ModelAndView mv = new ModelAndView();
 		TableData table = new TableData();
 		try {
 			int pageSize = Integer.parseInt(request.getParameter("pageSize"));
@@ -140,4 +170,6 @@ public class adminNoteController extends baseUtil{
 		}
 		return table.toString();
 	}
+	
+	
 }

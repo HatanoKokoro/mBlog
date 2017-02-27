@@ -28,4 +28,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	insert into essays (essays_value,user_id,createtime,modifytime)
 			values (#{essaysValue},#{userId},#{createTime,jdbcType=TIMESTAMP},#{modifyTime,jdbcType=TIMESTAMP})
 	</insert>
+	
+		<delete id="del" parameterType="int">
+		delete from essays where essays_id = #{id}
+	</delete>
+	
+	<select id="pageList"  resultType="map">
+		select <include refid="columns"></include> from essays where user_id = #{0} limit #{1},#{2}
+	</select>
+	
+	<select id="pageTotalCount" parameterType="int" resultType="long">
+		select count(*) from essays where user_id = #{userId}
+	</select>
+	
+	<select id="findById"  resultType="map" parameterType="int">
+		select <include refid="columns"></include> from essays where essays_id = #{id}
+	</select>
+
+	<update id="modify" parameterType="map">
+		update essays set  essays_value=#{essaysValue},
+			modifytime=#{modifyTime} where essays_id=#{id}
+	</update>
 </mapper>

@@ -29,14 +29,14 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label" >文章标题</label>
 							<div class="col-sm-4">
-								<input class="form-control col-sm-3" type="text" name="noteName" id="noteName">
+								<input class="form-control col-sm-3" type="text" name="noteName" id="noteName" value="${data.noteName}">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label class="col-sm-2 control-label" >文章内容</label>
 							<div class="col-sm-8">
-								<script id="container" name="content" type="text/plain"  ></script>
+								<script id="container" name="content" type="text/plain"  >${data.noteValue}</script>
 							</div>
 						</div>
 						
@@ -57,7 +57,7 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label" >文章摘要</label>
 							<div class="col-sm-4">
-								<input class="form-control col-sm-3" type="text" name="description" id="description">
+								<input class="form-control col-sm-3" type="text" name="description" id="description" value="${data.description}">
 							</div>
 						</div>
 						
@@ -67,6 +67,7 @@
 								<input class="btn btn-primary" type="button" id="save" value="提交" >
 							</div>
 						</div>
+						<input class="form-control col-sm-3" type="hidden" name="id" id="id" value="${data.id}">
 					</div>
 				</form>
 			</div>
@@ -87,19 +88,22 @@
 	
 	$(function(){
 		
+		var categoryId =${data.categoryId};
+		var classificationId =${data.classificationId};
+		
 		$("#save").click(function(){
 			 var dataJson= $("#formMenu").serializeArray();
 			 dataJson.push({"name":"description_default","value":ue.getContentTxt()});
 // 			 alert(JSON.stringify(dataJson));
 			$.ajax({
-				url:"admin/note/add",
+				url:"admin/note/modify",
 				type:"post",
 				data:dataJson,
 				dataType: "json",
 				success:function(data){
 					if(data.msg="success")
-						alert("添加成功");
-					window.location="admin/note"
+						alert("修改成功");
+					window.location="admin/note";
 				}
 			
 			})
@@ -121,6 +125,7 @@
 				$("#category").select2({
 					data:res
 				});
+				$('#category').val(categoryId).trigger('change');
 			}
 		})
 		
@@ -139,6 +144,7 @@
 				$("#classification").select2({
 					data:res
 				});
+				$('#classification').val(classificationId).trigger('change');
 			}
 		})
 		

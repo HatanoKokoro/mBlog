@@ -15,10 +15,6 @@ public class adminNoteService implements IadminNoteService{
 	@Autowired
 	private IadminNoteDao adminNoteDao;
 	
-	public List<Map<String,Object>> AllNote() throws Exception{
-		return adminNoteDao.AllNote();
-	}
-	
 	public int AddNote(Note note) throws Exception{
 		return adminNoteDao.AddNote(note);
 	}
@@ -41,6 +37,16 @@ public class adminNoteService implements IadminNoteService{
 	@Override
 	public long pageTotalCount(int UserId) throws Exception{
 		return adminNoteDao.pageTotalCount(UserId);
+	}
+
+	@Override
+	public Map<String, Object> findById(int id) throws Exception{
+		return adminNoteDao.findById(id);
+	}
+
+	@Override
+	public int modify(Map<String, Object> map) throws Exception {
+		return adminNoteDao.modify(map);
 	}
 	
 	

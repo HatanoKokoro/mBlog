@@ -29,7 +29,7 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label" >随笔内容</label>
 							<div class="col-sm-8">
-								<script id="container" name="content" type="text/plain" style="height:400px;" ></script>
+								<script id="container" name="content" type="text/plain" style="height:400px;" >${data.essaysValue}</script>
 							</div>
 						</div>
 						
@@ -39,6 +39,7 @@
 								<input class="btn btn-primary" type="button" id="save" value="提交" >
 							</div>
 						</div>
+						<input type="hidden" id="id" name="id" value="${data.essaysId }">
 					</div>
 				</form>
 			</div>
@@ -55,13 +56,13 @@
 		$("#save").click(function(){
 			 var dataJson= $("#formMenu").serializeArray();
 			$.ajax({
-				url:"admin/essays/add",
+				url:"admin/essays/modify",
 				type:"post",
 				data:dataJson,
 				dataType: "json",
 				success:function(data){
 					if(data.msg="success"){
-						alert("添加成功");
+						alert("修改成功");
 						window.location="admin/essays"
 					}
 				}
