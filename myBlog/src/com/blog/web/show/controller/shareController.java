@@ -17,7 +17,7 @@ public class shareController {
 	public ModelAndView findAll(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
 		try {
-			mv.setViewName("show/share");
+			mv.setViewName("show/share/share_list");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

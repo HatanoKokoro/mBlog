@@ -44,7 +44,9 @@ public class ArSecurity {
 	public void setKey(String strKey){
 		try{
 			KeyGenerator generator = KeyGenerator.getInstance("DES");
-			generator.init(new SecureRandom(strKey.getBytes()));
+			SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG" ); 
+			secureRandom.setSeed(strKey.getBytes()); 
+			generator.init(56,secureRandom);
 			this.key=generator.generateKey();
 			generator=null;
 		}catch(Exception e){
@@ -119,5 +121,11 @@ public class ArSecurity {
 	
 	public String getStrMing(){
 		return this.strMing;
+	}
+	
+	public static void main(String[] args) {
+		ArSecurity as = new ArSecurity();
+		String old = as.encrypt("98188623");
+		System.out.println(as.decrypt("I03LOTPHV0c="));
 	}
 }

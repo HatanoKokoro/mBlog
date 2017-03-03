@@ -39,11 +39,12 @@ public class adminUserController extends ArSecurity{
 	public ModelAndView login(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
 		try{
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
+			String username = encrypt(request.getParameter("username"));
+			String password = encrypt(request.getParameter("password"));
+			System.out.println("username="+username+"password="+password);
 			Map map = new HashMap();
-			map.put("username", encrypt(username));
-			map.put("password", encrypt(password));
+			map.put("username", username);
+			map.put("password", password);
 			User user = (User)userService.Login(map);
 			if(user!=null&&user.getUserId()>0){
 				request.getSession().setAttribute("UserInfo", user);
