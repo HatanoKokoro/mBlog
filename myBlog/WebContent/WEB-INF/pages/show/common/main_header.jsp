@@ -8,9 +8,9 @@
 		<br/>
 		<span class="fl na">Artoria</span><br/>
 		<div class="abfl">
-			<span class="fl">一条咸鱼，也有着自己的梦想</span><br />
+			<span class="fl">不断学习，实践，才能进步</span><br />
 			<span class="fl">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;努力，改变自己，改变世界</span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;永远没有完美的代码，亦无绝世神功</span>
 		</div>
 	</div>
 <!-- 	<div class="tag"> -->

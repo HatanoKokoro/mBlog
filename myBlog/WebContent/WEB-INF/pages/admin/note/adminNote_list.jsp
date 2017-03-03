@@ -34,7 +34,7 @@
 <script type="text/javascript" src="static/plugin/bootstrap-table/bootstrap-table.min.js"></script>
  <script type="text/javascript">
  $(function(){
-	  $('#table').bootstrapTable('destroy');  
+	 $('#table').bootstrapTable('destroy');  
 	 $('#table').bootstrapTable({
 		 	method: "get",
 		    url: "admin/note/list",
@@ -48,7 +48,6 @@
 				var temp = {
 					pageSize: params.limit,
 					pageIndex: params.offset,
-					total: this.totalRows,
 //	 				name_key:$('#searchContent').val() 
 				};
 				return temp;
