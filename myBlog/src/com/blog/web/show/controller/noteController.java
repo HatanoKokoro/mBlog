@@ -53,6 +53,7 @@ public class noteController extends baseUtil{
 		try {
 			Note note = (Note)noteService.findById(id);
 			List<Map<String,Object>> classification = classificationServise.findByUserId(userId);
+			noteService.modifyTraffic(id);
 			if(note.getId()>0){
 				mv.setViewName("show/note/note_view");
 				mv.addObject("data",note);
@@ -72,10 +73,15 @@ public class noteController extends baseUtil{
 		try {
 //		classificationId =  assignmentId(classificationId);
 		userId = assignmentUserId(userId);
-		pageSize=(pageSize-1)*8;
+		long total = noteService.findSize(userId);
+		mv.addObject("total",Math.ceil(total/8.0));
+		if(pageSize>Math.ceil(total/8.0))
+			pageSize=1;
+		mv.addObject("currentPage",pageSize);
 		String searchKey = request.getParameter("searchKey");
-			List<Map<String,Object>> data = noteService.findPage(userId, classificationId, categoryId,searchKey,pageSize);
+			List<Map<String,Object>> data = noteService.findPage(userId, classificationId, categoryId,searchKey,(pageSize-1)*8);
 			List<Map<String,Object>> classification = classificationServise.findByUserId(userId);
+			
 			mv.addObject("data",data);
 			mv.addObject("classification",classification);
 			int col=0;

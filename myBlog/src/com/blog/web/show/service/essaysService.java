@@ -19,11 +19,17 @@ public class essaysService implements IessaysService {
 	public List<Map<String,Object>> findByUserId(int userId) throws Exception {
 		return essaysdao.findByUserId(userId);
 	}
-	
+
 	@Override
-	public Note findById(int id)throws Exception{
-		return essaysdao.findById(id);
+	public List<Map<String, Object>> findPage(int userId, int pageSize) throws Exception {
+		return essaysdao.findPage(userId, pageSize);
 	}
+
+	@Override
+	public long findSize(int userId) throws Exception {
+		return essaysdao.findSize(userId);
+	}
+	
 
 
 }

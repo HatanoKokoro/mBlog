@@ -36,7 +36,7 @@
 		</p>
 		<p class="nav">
 			<a href="about">关于我</a> 
-			<a href="essays">个人随笔</a> 
+			<a href="essays/1-1">个人随笔</a> 
 			<a href="note/0-1-0-1">学无止境</a>
 			<a href="share">资源分享</a> 
 <!-- 			<a href="http://www.artoria.wang/myBlog/links"></a>  -->

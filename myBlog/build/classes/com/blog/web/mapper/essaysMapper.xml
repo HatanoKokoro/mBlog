@@ -27,4 +27,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findByUserId" resultMap="baseResult" parameterType="map">
 		select <include refid="columns"></include> from essays where user_id = #{userId}  order by createtime desc
 	</select>
+	
+	<select id="findPage" resultType="java.util.Map">
+		select <include refid="columns"></include>  from essays where user_id = #{userId}
+		 order by  createtime desc limit #{pageSize},5
+	</select>
+	
+	<select id="findSize" resultType="long">
+		select count(*) from essays where user_id = #{userId} 
+	</select>
 </mapper>

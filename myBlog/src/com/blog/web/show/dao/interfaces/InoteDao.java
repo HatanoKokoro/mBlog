@@ -14,4 +14,8 @@ public interface InoteDao {
 	public Note findById(int id)throws Exception;
 	
 	public List<Map<String,Object>> findPage(@Param("userId")int userId,@Param("classificationId")int classificationId ,@Param("categoryId")int categoryId,@Param("searchKey")String searchKey,@Param("pageSize")int pageSize) throws Exception;
+	
+	public int modifyTraffic(int id)throws Exception;
+	
+	public long findSize(int userId)throws Exception;
 }

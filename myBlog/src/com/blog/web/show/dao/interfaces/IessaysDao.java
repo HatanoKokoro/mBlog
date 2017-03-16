@@ -11,6 +11,7 @@ public interface IessaysDao {
 	
 	public List<Map<String,Object>> findByUserId(int userId)throws Exception;
 
-	public Note findById(int id)throws Exception;
+	public List<Map<String,Object>> findPage(@Param("userId") int userId,@Param("pageSize")int pageSize)throws Exception;
 	
+	public long findSize(int userId)throws Exception;
 }

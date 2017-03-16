@@ -46,6 +46,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select <include refid="columns"></include> from note where id = #{id}  order by create_time desc
 	</select>
 	
+	<select id="findSize" resultType="long">
+		select count(*) from note where user_id = #{userId} 
+	</select>
+	
 	<select id="findPage" resultType="java.util.Map">
 		select <include refid="columnAll"></include> ,(SELECT COUNT(c.comments_id) FROM comments AS c WHERE c.note_id=db.id) AS num  FROM note AS db  where db.user_id = #{userId} 
 		<if test="categoryId != null and categoryId !='' ">
@@ -59,18 +63,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		 order by db.create_time desc limit #{pageSize},8
 	</select>
-<!-- 	<select id="findPage" resultType="java.util.Map"> -->
-<!-- 		select <include refid="columns"></include> from note where user_id = #{userId}  -->
-<!-- 		<if test="categoryId != null and categoryId !='' "> -->
-<!-- 			and category_id = #{categoryId} -->
-<!-- 		</if> -->
-<!-- 		<if test="classificationId != null and classificationId !='' "> -->
-<!-- 			and classification_id = #{classificationId} -->
-<!-- 		</if> -->
-<!-- 	</select> -->
 	
 	<update id="modifyTraffic" parameterType="int">
-		update traffic set ((select traffic from note where id = #{id})+1) from note where id =#{id}
+		update note set traffic= traffic+1  where id =#{id}
 	</update>
 	
 </mapper>

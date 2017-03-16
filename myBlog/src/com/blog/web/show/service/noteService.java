@@ -30,4 +30,15 @@ public class noteService implements InoteService {
 		return notedao.findPage(userId, classificationId, categoryId,searchKey,pageSize);
 	}
 
+	@Override
+	public int modifyTraffic(int id) throws Exception {
+		return notedao.modifyTraffic(id);
+	}
+
+	@Override
+	public long findSize(int userId) throws Exception {
+		return notedao.findSize(userId);
+	}
+	
+
 }

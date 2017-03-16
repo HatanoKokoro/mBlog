@@ -13,15 +13,15 @@ import org.springframework.web.servlet.ModelAndView;
 public class messageController {
 	
 	
-	@RequestMapping(value={"","/"} , method=RequestMethod.GET )
-	public ModelAndView findAll(HttpServletRequest request,HttpServletResponse response){
-		ModelAndView mv = new ModelAndView();
-		try {
-			mv.setViewName("show/message");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return mv;
-	}
+//	@RequestMapping(value={"","/"} , method=RequestMethod.GET )
+//	public ModelAndView findAll(HttpServletRequest request,HttpServletResponse response){
+//		ModelAndView mv = new ModelAndView();
+//		try {
+//			mv.setViewName("show/message");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return mv;
+//	}
 	
 }

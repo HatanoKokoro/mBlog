@@ -58,11 +58,8 @@
 					</div>
 					<div class="col-bg-2"></div>
 				</div>
-				<div class="page">
-					<a class="btn btn-info" href="note/${col}-1-0-1">首页</a>
-					<a class="btn btn-info" href="note/${col}-1-0-1">1</a>
-					<a class="btn btn-info" href="note/${col}-1-0-1">末页</a>
-				</div>
+				<ul id="pageIndex" class="text-center">
+				</ul>
 			</div>
 		</div>
 		<div class="person_right">
@@ -85,6 +82,8 @@
 				</div>
 			</div>
 		</div>
+		<input type="hidden" id="currentPage" value="${currentPage} ">
+		<input type="hidden" id="total" value="${total} ">
 	</div>
 	
 	<jsp:include page="../../show/common/floor.jsp"></jsp:include>
@@ -92,6 +91,7 @@
 	
 <script type="text/javascript" src="static/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="static/plugin/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="static/plugin/bootstrap-paginator/bootstrap-paginator.js"></script>
 <script type="text/javascript" src="static/js/commons.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -100,8 +100,36 @@
 				$("#searchForm").submit();
 			
 		})
+		var currentPage = $("#currentPage").val();
+		var total = $("#total").val();
+		
+		 var container = $('#pageIndex');
+	        var options  = {
+	        			alignment:"center"
+	        			,currentPage:currentPage
+	                    , totalPages:total
+	                    ,  pageUrl: function(type, page, current){
+	                    	$("#currentPage").val(page);
+	                        if (page==current) {
+	                            return "javascript:void(0)";
+	                        } else {
+	                            return "note/0-1-0-"+page;
+	                        }
+	                    }
+	                    , onPageClicked:null
+	                    , onPageChanged:null
+
+
+	                };
+
+	                container.bootstrapPaginator(options);
+		
 		
 	})
+	
+
+       
+
 </script>
 
 </body>

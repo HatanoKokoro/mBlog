@@ -37,21 +37,7 @@
 		<jsp:include page="../../show/common/header.jsp"></jsp:include>
 	</div>
 	<div class="person_head">
-		<div class="portrait">
-			<img alt="头像" src="static/img/artoria.jpg">
-		</div>
-		<div class="portrait-right">
-			<div class="nick">
-				<br/>
-				<span class="fl na">Artoria</span><br/>
-				<span class="fl">一条咸鱼，</span>
-			</div>
-			<div class="tag">
-				<a class="fl" href="note/0-${data.userId}-1"><img src="static/img/bq1.png" /></a>
-				<a class="fl" href="note/0-${data.userId}-2"><img src="static/img/bq2.png" /></a>
-				<a class="fl" href="note/0-${data.userId}-3"><img src="static/img/bq3.png" /></a>
-			</div>
-		</div>
+		<jsp:include page="../../show/common/main_header.jsp"></jsp:include>
 	</div>
 	<div class="dbody">
 		<div class="note_person_body">
