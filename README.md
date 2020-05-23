@@ -1,4 +1,4 @@
-# mBlog
+# myBlog
 只是一个新人的练手之作<br>基于
 `spring` `spring-mvc` `mybatis`，使用了 `mysql`数据库和`proxool`数据库连接池
 的blog项目<br>
